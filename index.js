@@ -1,8 +1,5 @@
-//import * as algorithms from "./algorithms.js";
-const algorithms = require("./algorithms")
-
-//export default function main(hash) {
-module.exports = function main(hash) {
+import * as algorithms from "./algorithms.js";
+export default function main(hash) {
   guards(hash)
   return detectAlgorithms(hash)
 }

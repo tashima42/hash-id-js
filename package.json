@@ -1,8 +1,9 @@
 {
   "name": "@tashima42/hash-id",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hash Identifier program written in Javascript, based on hash-identifier from Zion3R",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
