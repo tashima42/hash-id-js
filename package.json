@@ -1,6 +1,6 @@
 {
   "name": "@tashima42/hash-id",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Hash Identifier program written in Javascript, based on hash-identifier from Zion3R",
   "main": "index.js",
   "scripts": {
