@@ -1,0 +1,23 @@
+{
+  "name": "@tashima42/hash-id",
+  "version": "1.0.0",
+  "description": "Hash Identifier program written in Javascript, based on hash-identifier from Zion3R",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tashima42/hash-id-js.git"
+  },
+  "keywords": [
+    "hash",
+    "security"
+  ],
+  "author": "tashima42",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Tashima42/hash-id-js/issues"
+  },
+  "homepage": "https://github.com/Tashima42/hash-id-js#readme"
+}
