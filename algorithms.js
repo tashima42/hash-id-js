@@ -1394,7 +1394,7 @@ function is_lower(s) {
   return s === s.toLowerCase()
 }
 
-export {
+module.exports = {
   CRC16,
   CRC16CCITT,
   FCS16,
