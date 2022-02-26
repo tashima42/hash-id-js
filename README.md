@@ -26,3 +26,9 @@ import {MD5} from "@tashima42/hash-id/algorithms"
 
 const isMD5 = MD5("571b4ba928ae62e103b54727721ebe56")
 ```
+Or
+```js
+import * as algorithms from "@tashima42/hash-id/algorithms"
+
+const isMD5 = algorithms.MD5("571b4ba928ae62e103b54727721ebe56")
+```
