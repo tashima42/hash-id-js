@@ -1,5 +1,5 @@
 # hash-id-js
-hash-id-js is a command line program for identifying hash types based on [Zion3R's implementation](https://github.com/blackploit/hash-identifier).
+hash-id-js is a library for identifying hash types based on [Zion3R's implementation](https://github.com/blackploit/hash-identifier).
 This software is meant for enumeration, this is not a hash cracking tool, and it isn't definitive, the only way to be sure of the algorithm is after the hash has been reversed.
 
 ## Install
