@@ -1,5 +1,7 @@
 # hash-id-js
-https://www.npmjs.com/package/@tashima42/hash-id
+* https://www.npmjs.com/package/@tashima42/hash-id
+* https://tashima42.github.io/hash-id-js/    
+
 hash-id-js is a library for identifying hash types based on [Zion3R's implementation](https://github.com/blackploit/hash-identifier).
 This software is meant for enumeration, this is not a hash cracking tool, and it isn't definitive, the only way to be sure of the algorithm is after the hash has been reversed.
 
