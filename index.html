@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>My Website</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  <style>
+    main,
+    body {
+      height: 90vh;
+    }
+
+    #hash {
+      min-width: 400px;
+    }
+
+    #algorithms {
+      margin-top: 20px;
+      width: 80%;
+      height: 80%;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Hash ID</h1>
+    <p>Type the Hash below, possible algorithms will be listed below in order of most likely to less likely</p>
+    <div>
+      <input type="text" placeholder="hash" id="hash" />
+      <button onclick="detect()" id="check-hash">check hash</button>
+    </div>
+    <textarea disabled id="algorithms"></textarea>
+  </main>
+  <script src="algorithms.js"></script>
+  <script>
+    const h = document.getElementById("hash")
+    const as = document.getElementById("algorithms")
+
+    function detect() {
+      const hashes = detectAlgorithms(h.value)
+      const hashesString = hashes.join("\n")
+      as.value = hashesString
+    }
+  </script>
+</body>
+
+</html>

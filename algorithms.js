@@ -1,3 +1,281 @@
+function guards(hash) {
+  if (hash === undefined) throw new Error("Hash can't be undefined")
+  if (hash === null) throw new Error("Hash can't be null")
+  if (typeof hash !== "string") throw new Error("Hash must be a string")
+  if (hash.length < 1) throw new Error("Hash must have at least one character")
+  if (!hash) throw new Error("Hash is invalid")
+}
+
+function detectAlgorithms(hash) {
+  const matchedAlgorithms = runAlgorithmsTest(hash);
+  const algorithmsDictionary = createAlgorithmsDictionary()
+
+  return matchedAlgorithms.map(algorithm => {
+    return algorithmsDictionary[algorithm]
+  })
+}
+
+function runAlgorithmsTest(hash) {
+  const matchAlgorithms = []
+  if (CRC16(hash)) matchAlgorithms.push(101020);
+  if (CRC16CCITT(hash)) matchAlgorithms.push(101040);
+  if (FCS16(hash)) matchAlgorithms.push(101060);
+  if (ADLER32(hash)) matchAlgorithms.push(102020)
+  if (CRC32(hash)) matchAlgorithms.push(102040)
+  if (CRC32B(hash)) matchAlgorithms.push(102060)
+  if (XOR32(hash)) matchAlgorithms.push(102080)
+  if (GHash325(hash)) matchAlgorithms.push(103020)
+  if (GHash323(hash)) matchAlgorithms.push(103040)
+  if (DESUnix(hash)) matchAlgorithms.push(104020)
+  if (MySQL(hash)) matchAlgorithms.push(105020)
+  if (MD5Middle(hash)) matchAlgorithms.push(105040)
+  if (MD5Half(hash)) matchAlgorithms.push(105060)
+  if (MD5(hash)) matchAlgorithms.push(106020)
+  if (DomainCachedCredentials(hash)) matchAlgorithms.push(106025)
+  if (RAdminv2x(hash)) matchAlgorithms.push(106027)
+  if (NTLM(hash)) matchAlgorithms.push(106029)
+  if (MD4(hash)) matchAlgorithms.push(106040)
+  if (MD2(hash)) matchAlgorithms.push(106060)
+  if (MD5HMAC(hash)) matchAlgorithms.push(106080)
+  if (MD4HMAC(hash)) matchAlgorithms.push(106100)
+  if (MD2HMAC(hash)) matchAlgorithms.push(106120)
+  if (MD5HMACWordpress(hash)) matchAlgorithms.push(106140)
+  if (Haval128(hash)) matchAlgorithms.push(106160)
+  if (Haval128HMAC(hash)) matchAlgorithms.push(106165)
+  if (RipeMD128(hash)) matchAlgorithms.push(106180)
+  if (RipeMD128HMAC(hash)) matchAlgorithms.push(106185)
+  if (SNEFRU128(hash)) matchAlgorithms.push(106200)
+  if (SNEFRU128HMAC(hash)) matchAlgorithms.push(106205)
+  if (Tiger128(hash)) matchAlgorithms.push(106220)
+  if (Tiger128HMAC(hash)) matchAlgorithms.push(106225)
+  if (md5passsalt(hash)) matchAlgorithms.push(106240)
+  if (md5saltmd5pass(hash)) matchAlgorithms.push(106260)
+  if (md5saltpass(hash)) matchAlgorithms.push(106280)
+  if (md5saltpasssalt(hash)) matchAlgorithms.push(106300)
+  if (md5saltpassusername(hash)) matchAlgorithms.push(106320)
+  if (md5saltmd5passsalt(hash)) matchAlgorithms.push(106360)
+  if (md5saltmd5passsalt1(hash)) matchAlgorithms.push(106380)
+  if (md5saltmd5saltpass2(hash)) matchAlgorithms.push(106400)
+  if (md5saltmd5md5passsalt(hash)) matchAlgorithms.push(106420)
+  if (md5username0pass(hash)) matchAlgorithms.push(106440)
+  if (md5usernameLFpass(hash)) matchAlgorithms.push(106460)
+  if (md5usernamemd5passsalt(hash)) matchAlgorithms.push(106480)
+  if (md5md5pass(hash)) matchAlgorithms.push(106500)
+  if (md5md5passsalt(hash)) matchAlgorithms.push(106520)
+  if (md5md5passmd5salt(hash)) matchAlgorithms.push(106540)
+  if (md5md5saltpass(hash)) matchAlgorithms.push(106560)
+  if (md5md5saltmd5pass(hash)) matchAlgorithms.push(106580)
+  if (md5md5usernamepasssalt(hash)) matchAlgorithms.push(106600)
+  if (md5md5md5pass(hash)) matchAlgorithms.push(106620)
+  if (md5md5md5md5pass(hash)) matchAlgorithms.push(106640)
+  if (md5md5md5md5md5pass(hash)) matchAlgorithms.push(106660)
+  if (md5sha1pass(hash)) matchAlgorithms.push(106680)
+  if (md5sha1md5pass(hash)) matchAlgorithms.push(106700)
+  if (md5sha1md5sha1pass(hash)) matchAlgorithms.push(106720)
+  if (md5strtouppermd5pass(hash)) matchAlgorithms.push(106740)
+  if (MD5Wordpress(hash)) matchAlgorithms.push(107020)
+  if (MD5phpBB3(hash)) matchAlgorithms.push(107040)
+  if (MD5Unix(hash)) matchAlgorithms.push(107060)
+  if (LineageIIC4(hash)) matchAlgorithms.push(107080)
+  if (MD5APR(hash)) matchAlgorithms.push(108020)
+  if (SHA1(hash)) matchAlgorithms.push(109020)
+  if (MySQL5(hash)) matchAlgorithms.push(109040)
+  if (MySQL160bit(hash)) matchAlgorithms.push(109060)
+  if (Tiger160(hash)) matchAlgorithms.push(109080)
+  if (Haval160(hash)) matchAlgorithms.push(109100)
+  if (RipeMD160(hash)) matchAlgorithms.push(109120)
+  if (SHA1HMAC(hash)) matchAlgorithms.push(109140)
+  if (Tiger160HMAC(hash)) matchAlgorithms.push(109160)
+  if (RipeMD160HMAC(hash)) matchAlgorithms.push(109180)
+  if (Haval160HMAC(hash)) matchAlgorithms.push(109200)
+  if (SHA1MaNGOS(hash)) matchAlgorithms.push(109220)
+  if (SHA1MaNGOS2(hash)) matchAlgorithms.push(109240)
+  if (sha1passsalt(hash)) matchAlgorithms.push(109260)
+  if (sha1saltpass(hash)) matchAlgorithms.push(109280)
+  if (sha1saltmd5pass(hash)) matchAlgorithms.push(109300)
+  if (sha1saltmd5passsalt(hash)) matchAlgorithms.push(109320)
+  if (sha1saltsha1pass(hash)) matchAlgorithms.push(109340)
+  if (sha1saltsha1saltsha1pass(hash)) matchAlgorithms.push(109360)
+  if (sha1usernamepass(hash)) matchAlgorithms.push(109380)
+  if (sha1usernamepasssalt(hash)) matchAlgorithms.push(109400)
+  if (sha1md5passsalt(hash)) matchAlgorithms.push(109440)
+  if (sha1md5sha1pass(hash)) matchAlgorithms.push(109460)
+  if (sha1sha1pass(hash)) matchAlgorithms.push(109480)
+  if (sha1sha1passsalt(hash)) matchAlgorithms.push(109500)
+  if (sha1sha1passsubstrpass03(hash)) matchAlgorithms.push(109520)
+  if (sha1sha1saltpass(hash)) matchAlgorithms.push(109540)
+  if (sha1sha1sha1pass(hash)) matchAlgorithms.push(109560)
+  if (sha1strtolowerusernamepass(hash)) matchAlgorithms.push(109580)
+  if (Tiger192(hash)) matchAlgorithms.push(110020)
+  if (Haval192(hash)) matchAlgorithms.push(110040)
+  if (Tiger192HMAC(hash)) matchAlgorithms.push(110060)
+  if (Haval192HMAC(hash)) matchAlgorithms.push(110080)
+  if (MD5passsaltjoomla1(hash)) matchAlgorithms.push(112020)
+  if (SHA1Django(hash)) matchAlgorithms.push(113020)
+  if (SHA224(hash)) matchAlgorithms.push(114020)
+  if (Haval224(hash)) matchAlgorithms.push(114040)
+  if (SHA224HMAC(hash)) matchAlgorithms.push(114060)
+  if (Haval224HMAC(hash)) matchAlgorithms.push(114080)
+  if (SHA256(hash)) matchAlgorithms.push(115020)
+  if (Haval256(hash)) matchAlgorithms.push(115040)
+  if (GOSTR341194(hash)) matchAlgorithms.push(115060)
+  if (RipeMD256(hash)) matchAlgorithms.push(115080)
+  if (SNEFRU256(hash)) matchAlgorithms.push(115100)
+  if (SHA256HMAC(hash)) matchAlgorithms.push(115120)
+  if (Haval256HMAC(hash)) matchAlgorithms.push(115140)
+  if (RipeMD256HMAC(hash)) matchAlgorithms.push(115160)
+  if (SNEFRU256HMAC(hash)) matchAlgorithms.push(115180)
+  if (SHA256md5pass(hash)) matchAlgorithms.push(115200)
+  if (SHA256sha1pass(hash)) matchAlgorithms.push(115220)
+  if (MD5passsaltjoomla2(hash)) matchAlgorithms.push(116020)
+  if (SAM(hash)) matchAlgorithms.push(116040)
+  if (SHA256Django(hash)) matchAlgorithms.push(117020)
+  if (RipeMD320(hash)) matchAlgorithms.push(118020)
+  if (RipeMD320HMAC(hash)) matchAlgorithms.push(118040)
+  if (SHA384(hash)) matchAlgorithms.push(119020)
+  if (SHA384HMAC(hash)) matchAlgorithms.push(119040)
+  if (SHA256s(hash)) matchAlgorithms.push(120020)
+  if (SHA384Django(hash)) matchAlgorithms.push(121020)
+  if (SHA512(hash)) matchAlgorithms.push(122020)
+  if (Whirlpool(hash)) matchAlgorithms.push(122040)
+  if (SHA512HMAC(hash)) matchAlgorithms.push(122060)
+  if (WhirlpoolHMAC(hash)) matchAlgorithms.push(122080)
+  if (sha1md5pass(hash)) matchAlgorithms.push(1094202)
+
+  return matchAlgorithms
+}
+
+
+function createAlgorithmsDictionary() {
+  return {
+    102020: "ADLER-32",
+    101020: "CRC-16",
+    101040: "CRC-16-CCITT",
+    101060: "FCS-16",
+    102020: "ADLER-32",
+    102040: "CRC-32",
+    102060: "CRC-32B",
+    102080: "XOR-32",
+    103020: "GHash-32-5",
+    103040: "GHash-32-3",
+    104020: "DES(Unix)",
+    105020: "MySQL",
+    105040: "MD5(Middle)",
+    105060: "MD5(Half)",
+    106020: "MD5",
+    106025: "Domain Cached Credentials - MD4(MD4(($pass)).(strtolower($username)))",
+    106027: "RAdmin v2.x",
+    106029: "NTLM",
+    106040: "MD4",
+    106060: "MD2",
+    106080: "MD5(HMAC)",
+    106100: "MD4(HMAC)",
+    106120: "MD2(HMAC)",
+    106140: "MD5(HMAC(Wordpress))",
+    106160: "Haval-128",
+    106165: "Haval-128(HMAC)",
+    106180: "RipeMD-128",
+    106185: "RipeMD-128(HMAC)",
+    106200: "SNEFRU-128",
+    106205: "SNEFRU-128(HMAC)",
+    106220: "Tiger-128",
+    106225: "Tiger-128(HMAC)",
+    106240: "md5($pass.$salt)",
+    106260: "md5($salt.'-'.md5($pass))",
+    106280: "md5($salt.$pass)",
+    106300: "md5($salt.$pass.$salt)",
+    106320: "md5($salt.$pass.$username)",
+    106360: "md5($salt.md5($pass).$salt)",
+    106380: "md5($salt.md5($pass.$salt))",
+    106400: "md5($salt.md5($salt.$pass))",
+    106420: "md5($salt.md5(md5($pass).$salt))",
+    106440: "md5($username.0.$pass)",
+    106460: "md5($username.LF.$pass)",
+    106480: "md5($username.md5($pass).$salt)",
+    106500: "md5(md5($pass))",
+    106520: "md5(md5($pass).$salt)",
+    106540: "md5(md5($pass).md5($salt))",
+    106560: "md5(md5($salt).$pass)",
+    106580: "md5(md5($salt).md5($pass))",
+    106600: "md5(md5($username.$pass).$salt)",
+    106620: "md5(md5(md5($pass)))",
+    106640: "md5(md5(md5(md5($pass))))",
+    106660: "md5(md5(md5(md5(md5($pass)))))",
+    106680: "md5(sha1($pass))",
+    106700: "md5(sha1(md5($pass)))",
+    106720: "md5(sha1(md5(sha1($pass))))",
+    106740: "md5(strtoupper(md5($pass)))",
+    107020: "MD5(Wordpress)",
+    107040: "MD5(phpBB3)",
+    107060: "MD5(Unix)",
+    107080: "Lineage II C4",
+    108020: "MD5(APR)",
+    109020: "SHA-1",
+    109040: "MySQL5 - SHA-1(SHA-1($pass))",
+    109060: "MySQL 160bit - SHA-1(SHA-1($pass))",
+    109080: "Tiger-160",
+    109100: "Haval-160",
+    109120: "RipeMD-160",
+    109140: "SHA-1(HMAC)",
+    109160: "Tiger-160(HMAC)",
+    109180: "RipeMD-160(HMAC)",
+    109200: "Haval-160(HMAC)",
+    109220: "SHA-1(MaNGOS)",
+    109240: "SHA-1(MaNGOS2)",
+    109260: "sha1($pass.$salt)",
+    109280: "sha1($salt.$pass)",
+    109300: "sha1($salt.md5($pass))",
+    109320: "sha1($salt.md5($pass).$salt)",
+    109340: "sha1($salt.sha1($pass))",
+    109360: "sha1($salt.sha1($salt.sha1($pass)))",
+    109380: "sha1($username.$pass)",
+    109400: "sha1($username.$pass.$salt)",
+    109440: "sha1(md5($pass).$salt)",
+    109460: "sha1(md5(sha1($pass)))",
+    109480: "sha1(sha1($pass))",
+    109500: "sha1(sha1($pass).$salt)",
+    109520: "sha1(sha1($pass).substr($pass,0,3))",
+    109540: "sha1(sha1($salt.$pass))",
+    109560: "sha1(sha1(sha1($pass)))",
+    109580: "sha1(strtolower($username).$pass)",
+    110020: "Tiger-192",
+    110040: "Haval-192",
+    110060: "Tiger-192(HMAC)",
+    110080: "Haval-192(HMAC)",
+    112020: "md5($pass.$salt) - Joomla",
+    113020: "SHA-1(Django)",
+    114020: "SHA-224",
+    114040: "Haval-224",
+    114060: "SHA-224(HMAC)",
+    114080: "Haval-224(HMAC)",
+    115020: "SHA-256",
+    115040: "Haval-256",
+    115060: "GOST R 34.11-94",
+    115080: "RipeMD-256",
+    115100: "SNEFRU-256",
+    115120: "SHA-256(HMAC)",
+    115140: "Haval-256(HMAC)",
+    115160: "RipeMD-256(HMAC)",
+    115180: "SNEFRU-256(HMAC)",
+    115200: "SHA-256(md5($pass))",
+    115220: "SHA-256(sha1($pass))",
+    116020: "md5($pass.$salt) - Joomla",
+    116040: "SAM - (LM_hash:NT_hash))",
+    117020: "SHA-256(Django)",
+    118020: "RipeMD-320",
+    118040: "RipeMD-320(HMAC)",
+    119020: "SHA-384",
+    119040: "SHA-384(HMAC)",
+    120020: "SHA-256",
+    121020: "SHA-384(Django)",
+    122020: "SHA-512",
+    122040: "Whirlpool",
+    122060: "SHA-512(HMAC)",
+    122080: "Whirlpool(HMAC)",
+    1094202: "sha1(md5($pass))",
+  }
+}
+
 function CRC16(hash) {
   const hs = "4607";
   if (hash.length == hs.length
@@ -1394,129 +1672,3 @@ function is_lower(s) {
   return s === s.toLowerCase()
 }
 
-module.exports = {
-  CRC16,
-  CRC16CCITT,
-  FCS16,
-  ADLER32,
-  CRC32,
-  CRC32B,
-  XOR32,
-  GHash325,
-  GHash323,
-  DESUnix,
-  MySQL,
-  MD5Middle,
-  MD5Half,
-  MD5,
-  DomainCachedCredentials,
-  RAdminv2x,
-  NTLM,
-  MD4,
-  MD2,
-  MD5HMAC,
-  MD4HMAC,
-  MD2HMAC,
-  MD5HMACWordpress,
-  Haval128,
-  Haval128HMAC,
-  RipeMD128,
-  RipeMD128HMAC,
-  SNEFRU128,
-  SNEFRU128HMAC,
-  Tiger128,
-  Tiger128HMAC,
-  md5passsalt,
-  md5saltpass,
-  md5saltpasssalt,
-  md5saltpassusername,
-  md5saltmd5pass,
-  md5saltmd5passsalt,
-  md5saltmd5passsalt1,
-  md5saltmd5saltpass2,
-  md5saltmd5md5passsalt,
-  md5username0pass,
-  md5usernameLFpass,
-  md5usernamemd5passsalt,
-  md5md5pass,
-  md5md5passsalt,
-  md5md5passmd5salt,
-  md5md5saltpass,
-  md5md5saltmd5pass,
-  md5md5usernamepasssalt,
-  md5md5md5pass,
-  md5md5md5md5pass,
-  md5md5md5md5md5pass,
-  md5sha1pass,
-  md5sha1md5pass,
-  md5sha1md5sha1pass,
-  md5strtouppermd5pass,
-  MD5Wordpress,
-  MD5phpBB3,
-  MD5Unix,
-  LineageIIC4,
-  MD5APR,
-  SHA1,
-  MySQL5,
-  MySQL160bit,
-  Tiger160,
-  Haval160,
-  RipeMD160,
-  SHA1HMAC,
-  Tiger160HMAC,
-  RipeMD160HMAC,
-  Haval160HMAC,
-  SHA1MaNGOS,
-  SHA1MaNGOS2,
-  sha1passsalt,
-  sha1saltpass,
-  sha1saltmd5pass,
-  sha1saltmd5passsalt,
-  sha1saltsha1pass,
-  sha1saltsha1saltsha1pass,
-  sha1usernamepass,
-  sha1usernamepasssalt,
-  sha1md5passsalt,
-  sha1md5sha1pass,
-  sha1sha1pass,
-  sha1sha1passsalt,
-  sha1sha1passsubstrpass03,
-  sha1sha1saltpass,
-  sha1sha1sha1pass,
-  sha1strtolowerusernamepass,
-  Tiger192,
-  Haval192,
-  Tiger192HMAC,
-  Haval192HMAC,
-  MD5passsaltjoomla1,
-  SHA1Django,
-  SHA224,
-  Haval224,
-  SHA224HMAC,
-  Haval224HMAC,
-  SHA256,
-  Haval256,
-  GOSTR341194,
-  RipeMD256,
-  SNEFRU256,
-  SHA256HMAC,
-  Haval256HMAC,
-  RipeMD256HMAC,
-  SNEFRU256HMAC,
-  SHA256md5pass,
-  SHA256sha1pass,
-  MD5passsaltjoomla2,
-  SAM,
-  SHA256Django,
-  RipeMD320,
-  RipeMD320HMAC,
-  SHA384,
-  SHA384HMAC,
-  SHA256s,
-  SHA384Django,
-  SHA512,
-  Whirlpool,
-  SHA512HMAC,
-  WhirlpoolHMAC,
-  sha1md5pass,
-}
